@@ -47,7 +47,7 @@ A real-time theme generator built with Next.js 15 and Tailwind CSS 4, inspired b
    ```
 
 4. **Open your browser**
-   Navigate to [http://localhost:3001](http://localhost:3001)
+   Navigate to [https://dynamic-theme-generator.vercel.app](https://dynamic-theme-generator.vercel.app)
 
 ## 🛠 How It Works
 

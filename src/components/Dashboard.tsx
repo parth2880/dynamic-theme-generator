@@ -265,13 +265,13 @@ export default function Dashboard({ token }: DashboardProps) {
                                                 Authorization: `Bearer ${token}`,
                                             },
                                             body: JSON.stringify({
-                                                name: 'Test Website (Local)',
-                                                webhookUrl: 'http://localhost:3000/api/webhook',
+                                                name: 'Dynamic Theme Test Website',
+                                                webhookUrl: process.env.NEXT_PUBLIC_TEST_WEBSITE_URL || 'https://dynamic-theme-test-website.vercel.app/api/webhook',
                                             }),
                                         });
 
                                         if (response.ok) {
-                                            alert('Demo website created! Make sure your test-website is running on localhost:3000');
+                                            alert('Demo website created! Your test website is ready to receive themes at https://dynamic-theme-test-website.vercel.app/');
                                             fetchData();
                                         } else {
                                             alert('Failed to create demo website');
