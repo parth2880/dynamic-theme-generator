@@ -137,7 +137,7 @@ export class WebhookService {
         }
     }
 
-    private static generateSignature(payload: WebhookPayload, apiKey: string): string {
+    private static generateSignature(payload: Omit<WebhookPayload, 'signature'>, apiKey: string): string {
         const data = JSON.stringify(payload);
         return crypto.createHmac('sha256', apiKey).update(data).digest('hex');
     }
