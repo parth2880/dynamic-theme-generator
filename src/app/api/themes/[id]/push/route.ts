@@ -44,7 +44,7 @@ export async function POST(
             );
         }
 
-        let results: any[];
+        let results: Array<{ success: boolean; error: string | null }>;
 
         if (projectIds && Array.isArray(projectIds)) {
             // Push to specific projects

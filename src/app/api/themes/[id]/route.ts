@@ -5,8 +5,9 @@ import { getCurrentUser } from '@/lib/auth';
 // GET /api/themes/[id] - Get specific theme
 export async function GET(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
+    const { id } = await params;
     try {
         const authHeader = request.headers.get('authorization');
         if (!authHeader?.startsWith('Bearer ')) {
@@ -27,7 +28,7 @@ export async function GET(
 
         const theme = await prisma.theme.findFirst({
             where: {
-                id: params.id,
+                id: id,
                 userId: user.id,
             },
         });
@@ -52,8 +53,9 @@ export async function GET(
 // PUT /api/themes/[id] - Update theme
 export async function PUT(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
+    const { id } = await params;
     try {
         const authHeader = request.headers.get('authorization');
         if (!authHeader?.startsWith('Bearer ')) {
@@ -76,7 +78,7 @@ export async function PUT(
 
         const theme = await prisma.theme.findFirst({
             where: {
-                id: params.id,
+                id: id,
                 userId: user.id,
             },
         });
@@ -89,7 +91,7 @@ export async function PUT(
         }
 
         const updatedTheme = await prisma.theme.update({
-            where: { id: params.id },
+            where: { id: id },
             data: {
                 name: name || theme.name,
                 description: description !== undefined ? description : theme.description,
@@ -113,8 +115,9 @@ export async function PUT(
 // DELETE /api/themes/[id] - Delete theme
 export async function DELETE(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
+    const { id } = await params;
     try {
         const authHeader = request.headers.get('authorization');
         if (!authHeader?.startsWith('Bearer ')) {
@@ -135,7 +138,7 @@ export async function DELETE(
 
         const theme = await prisma.theme.findFirst({
             where: {
-                id: params.id,
+                id: id,
                 userId: user.id,
             },
         });
@@ -148,7 +151,7 @@ export async function DELETE(
         }
 
         await prisma.theme.delete({
-            where: { id: params.id },
+            where: { id: id },
         });
 
         return NextResponse.json({ message: 'Theme deleted successfully' });

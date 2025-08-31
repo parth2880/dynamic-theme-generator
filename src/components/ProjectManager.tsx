@@ -15,7 +15,7 @@ export default function ProjectManager({ token, onProjectAdded }: ProjectManager
         name: '',
         description: '',
         webhookUrl: '',
-        platform: 'CUSTOM' as const,
+        platform: 'CUSTOM' as 'VERCEL' | 'NETLIFY' | 'CUSTOM' | 'GITHUB',
     });
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -117,7 +117,7 @@ export default function ProjectManager({ token, onProjectAdded }: ProjectManager
                         </label>
                         <select
                             value={formData.platform}
-                            onChange={(e) => setFormData(prev => ({ ...prev, platform: e.target.value as any }))}
+                            onChange={(e) => setFormData(prev => ({ ...prev, platform: e.target.value as 'VERCEL' | 'NETLIFY' | 'CUSTOM' | 'GITHUB' }))}
                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                         >
                             <option value="CUSTOM">Custom</option>

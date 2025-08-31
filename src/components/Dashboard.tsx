@@ -27,7 +27,7 @@ interface Project {
     createdAt: string;
     updatedAt: string;
     userId: string;
-    themes?: any[];
+    themes?: Array<{ id: string; theme: Theme; isActive: boolean; createdAt: string; updatedAt: string; projectId: string; themeId: string }>;
 }
 
 interface DashboardProps {
@@ -41,13 +41,13 @@ export default function Dashboard({ token }: DashboardProps) {
     const [selectedTheme, setSelectedTheme] = useState<string>('');
     const [selectedProjects, setSelectedProjects] = useState<string[]>([]);
     const [pushing, setPushing] = useState(false);
-    const [pushResult, setPushResult] = useState<any>(null);
+    const [pushResult, setPushResult] = useState<{ message?: string; results?: Array<{ success: boolean; error?: string }>; error?: string } | null>(null);
     const [showAddForm, setShowAddForm] = useState(false);
     const [newProject, setNewProject] = useState({
         name: '',
         description: '',
         webhookUrl: '',
-        platform: 'VERCEL' as const
+        platform: 'VERCEL' as 'VERCEL' | 'NETLIFY' | 'CUSTOM' | 'GITHUB'
     });
 
     useEffect(() => {
@@ -312,7 +312,7 @@ export default function Dashboard({ token }: DashboardProps) {
                                 </label>
                                 <select
                                     value={newProject.platform}
-                                    onChange={(e) => setNewProject({ ...newProject, platform: e.target.value as any })}
+                                    onChange={(e) => setNewProject({ ...newProject, platform: e.target.value as 'VERCEL' | 'NETLIFY' | 'CUSTOM' | 'GITHUB' })}
                                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                                 >
                                     <option value="VERCEL">Vercel</option>
@@ -378,7 +378,7 @@ export default function Dashboard({ token }: DashboardProps) {
                                 <li>1. Build and deploy your website (Vercel, Netlify, etc.)</li>
                                 <li>2. Add a webhook endpoint to receive theme updates</li>
                                 <li>3. Register your website here with the webhook URL</li>
-                                <li>4. Start pushing themes to change your website's styling!</li>
+                                <li>4. Start pushing themes to change your website&apos;s styling!</li>
                             </ol>
                         </div>
                     </div>
